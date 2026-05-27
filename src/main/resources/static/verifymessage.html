@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <style>
+        :root {
+            --bg-surface: #ffffff;
+            --border-color: #e2e8f0;
+
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+
+            --accent-destructive: #ef4444;
+            /* Soft Red for logout */
+            --accent-destructive-hover: #dc2626;
+            --accent-interactive: #4f46e5;
+            /* Primary Indigo */
+            --accent-interactive-hover: #4338ca;
+
+            --radius-md: 8px;
+            --transition: all 0.2s ease-in-out;
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* ==========================================================================
+   2. DASHBOARD PAGE ARCHITECTURE
+   ========================================================================== */
+        #VerificationPage {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            padding: 1.5rem 2rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-weight: 600;
+            /* Layout split: Typography left, Actions right */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+
+            max-width: 1200px;
+            width: 100%;
+            margin: 5rem auto;
+        }
+
+        /* Welcome Typography */
+        #Welcome h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        /* ==========================================================================
+   3. ACTION OPTIONS & BUTTONS
+   ========================================================================== */
+        #Options {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+            /* Prevents action buttons from wrapping awkwardly */
+        }
+
+        #Options button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            outline: none;
+            white-space: nowrap;
+            background-color: var(--accent-interactive);
+            color: #ffffff;
+        }
+
+        /* Standardizing the dynamic action classes */
+        #Options button:focus-visible {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4);
+        }
+    </style>
+
+    <script>
+        function Message(MessageTitle, RederictPage, RederictMessage) {
+            const Page = document.getElementById("VerificationPage");
+            Page.innerHTML = ` 
+                 <div id="Welcome">
+            <h1 id="messages">${MessageTitle}</h1>
+             </div>
+          <div id="Options">
+            <button onclick="window.location.href= '${RederictPage}' ">${RederictMessage}</button>
+           </div>   
+         `;
+
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('message') === 'UserNotFound') {
+                    Message("Hi ! We can`t find you!, Please try to Register again","/Register","Register here");
+            }else if (urlParams.get('message') === 'TokenExpire') {
+                Message("Hi! This token already expire, Please try to Rister again","/Register","Register here");
+            }else if (urlParams.get('message') === 'Success') {
+                Message("Hi! You have successesfully Verified!, Please Return to home page","/login","Log in");
+            }else {
+                Message("Un Error Happen, We a sorry for this! ", "/Register","Register here");
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <section id="VerificationPage">
+
+    </section>
+</body>
+
+</html>
